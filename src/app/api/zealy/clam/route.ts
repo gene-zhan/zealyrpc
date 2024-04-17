@@ -14,14 +14,14 @@ export async function POST(request: NextRequest) {
     const requestHeaders = new Headers(request.headers)
     const apiKey = requestHeaders.get("x-api-key")
 
-    if (apiKey !==DefaultKey) {
+    if (apiKey !== DefaultKey) {
         return NextResponse.json({ret: 'Invalid API Key'}, {status: 400});
     }
 
 
     const res = await request.json()
     const success = true; // Replace with custom logic
-
+    console.log(res, success);
 
     return NextResponse.json(res, {status: 200});
 }
