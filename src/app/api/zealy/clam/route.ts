@@ -45,16 +45,16 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ret: 'accounts email is null'}, {status: 400});
     }
     const result = await db.select().from(flexiQuizTask).where(eq(flexiQuizTask.emailAddress, res?.accounts?.email))
+    console.log("zealyresult: " + JSON.stringify(result));
+
     if(result[0].percentageScore){
        const     percentageScore = parseInt(result[0].percentageScore, 10);
        if(percentageScore>=60){
            return NextResponse.json({ret: 'Passed'}, {status: 200});
        }else {
            return NextResponse.json({ret: 'Failed,This score is ' + percentageScore + ' which is too low.'}, {status: 400});
-
        }
     }
-    console.log("zealy: " + JSON.stringify(result));
 
     return NextResponse.json({ret:'can not find percentage Score with email'}, {status: 400});
 }
