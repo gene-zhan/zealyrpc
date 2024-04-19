@@ -16,9 +16,6 @@ export async function POST(request: NextRequest) {
     console.log("submit: " + JSON.stringify(res));
 
     const email: string | undefined = jsonpath.query(res, '$.data.registration_fields[?(@.name=="Email address")].value')[0];
-    const lastName: string | undefined = jsonpath.query(res, '$.data.registration_fields[?(@.name=="Last name")].value')[0];
-    const firstName: string | undefined = jsonpath.query(res, '$.data.registration_fields[?(@.name=="First name")].value')[0];
-
 
     if (email === undefined) return NextResponse.json({ret: 'Invalid email'}, {status: 200}); // No email (email)
 
@@ -28,8 +25,6 @@ export async function POST(request: NextRequest) {
         eventId: res?.event_id,
         responseId: res?.data?.response_id,
         questId: res?.data?.quiz_id,
-        firstName: firstName,
-        lastName: lastName,
         emailAddress: email,
         userId: res?.data?.user_id,
         points: res?.data?.points,
