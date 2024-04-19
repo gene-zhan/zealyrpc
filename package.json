@@ -10,10 +10,10 @@
     "seed": "node -r dotenv/config ./scripts/seed.js"
   },
   "dependencies": {
+    "@types/jsonpath": "^0.2.4",
     "@vercel/postgres": "^0.8.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.8",
-    "kysely": "^0.27.3",
     "next": "14.2.1",
     "react": "^18",
     "react-dom": "^18"
