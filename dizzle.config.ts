@@ -9,7 +9,7 @@ export default defineConfig({
     out: "./db/drizzle",
     driver: 'pg',
     dbCredentials: {
-        connectionString: process.env.POSTGRES_URL,
+        "connectionString": process.env.POSTGRES_URL
     }
 });
 export const db = drizzle(sql);
