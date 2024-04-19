@@ -33,12 +33,12 @@ export async function POST(request: NextRequest) {
         userId: res?.userId,
         questId: res?.questId,
         requestId: res?.requestId,
-        email: res?.account?.email,
-        wallet: res?.account?.wallet,
-        discordId: res?.account?.discordId,
-        discordHandle: res.account?.discordHandle,
-        twitterId: res?.account?.twitterId,
-        twitterUname: res?.account?.twitterUname,
+        email: res?.accounts?.email,
+        wallet: res?.accounts?.wallet,
+        discordId: res?.accounts?.discordId,
+        discordHandle: res.accounts?.discordHandle,
+        twitterId: res?.accounts?.twitterId,
+        twitterUname: res?.accounts?.twitterUname,
     });
 
     return NextResponse.json({ret: 'Success'}, {status: 200});
