@@ -55,6 +55,6 @@ export async function POST(request: NextRequest) {
     if (queryResult[0].count == 1) {
         return NextResponse.json({ret: 'Passed'}, {status: 200});
     } else {
-        return NextResponse.json({ret: 'Failed,This score not passed'}, {status: 400});
+        return NextResponse.json({ret: 'Failed, The account ( ' + res?.accounts?.email + ' ) not passed'}, {status: 400});
     }
 }
