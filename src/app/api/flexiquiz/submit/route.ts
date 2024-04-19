@@ -1,5 +1,4 @@
 import {type  NextRequest, NextResponse} from 'next/server'
-import jsonpath from 'jsonpath';
 
 import {db} from '../../../../../dizzle.config'
 import {flexiQuizTask} from "../../../../../db/drizzle/schema";
@@ -15,7 +14,7 @@ export async function POST(request: NextRequest) {
     const res = await request.json()
     console.log("submit: " + JSON.stringify(res));
 
-    const email: string | undefined = jsonpath.query(res, '$.data.registration_fields[?(@.name=="Email address")].value')[0];
+    const email: string = (res.data.registration_fields.find((field: any) => field.name === "Email address") || {}).value;
 
     if (email === undefined) return NextResponse.json({ret: 'Invalid email'}, {status: 200}); // No email (email)
 
