@@ -6,7 +6,7 @@ import {drizzle} from 'drizzle-orm/vercel-postgres';
 dotenv.config({path: ".env"});
 export default defineConfig({
     dbCredentials: {
-        "connectionString": process.env.POSTGRES_URL ||""
+        connectionString: process.env.POSTGRES_URL ||""
     },
     driver: 'pg',
     out: "./db/drizzle",
