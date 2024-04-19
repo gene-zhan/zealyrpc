@@ -28,24 +28,33 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ret: 'Invalid request json'}, {status: 400});
     }
 
-
-    //int json response
-    await db.insert(zealyQuizTask).values({
-        userId: res?.userId,
-        questId: res?.questId,
-        requestId: res?.requestId,
-        email: res?.accounts?.email,
-        wallet: res?.accounts?.wallet,
-        discordId: res?.accounts?.discordId,
-        discordHandle: res.accounts?.discordHandle,
-        twitterId: res?.accounts?.twitterId,
-        twitterUname: res?.accounts?.twitterUname,
-    });
+    // //int json response
+    // await db.insert(zealyQuizTask).values({
+    //     userId: res?.userId,
+    //     questId: res?.questId,
+    //     requestId: res?.requestId,
+    //     email: res?.accounts?.email,
+    //     wallet: res?.accounts?.wallet,
+    //     discordId: res?.accounts?.discordId,
+    //     discordHandle: res.accounts?.discordHandle,
+    //     twitterId: res?.accounts?.twitterId,
+    //     twitterUname: res?.accounts?.twitterUname,
+    // });
 
     if(res?.accounts?.email == null) {
         return NextResponse.json({ret: 'accounts email is null'}, {status: 400});
     }
-    const result = await db.select().from(flexiQuizTask).where(eq(flexiQuizTask.emailAddress, res?.accounts?.email));
+    const result = await db.select().from(flexiQuizTask).where(eq(flexiQuizTask.emailAddress, res?.accounts?.email))
+    if(result[0].percentageScore){
+       const     percentageScore = parseInt(result[0].percentageScore, 10);
+       if(percentageScore>=60){
+           return NextResponse.json({ret: 'Passed'}, {status: 200});
+       }else {
+           return NextResponse.json({ret: 'Failed,This score is ' + percentageScore + ' which is too low.'}, {status: 400});
 
-    return NextResponse.json({ret: result}, {status: 200});
+       }
+    }
+    console.log("zealy: " + JSON.stringify(result));
+
+    return NextResponse.json({ret:'can not find percentage Score with email'}, {status: 400});
 }
