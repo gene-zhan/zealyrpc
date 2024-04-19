@@ -5,12 +5,12 @@ import {drizzle} from 'drizzle-orm/vercel-postgres';
 
 dotenv.config({path: ".env"});
 export default defineConfig({
-    schema: "./db/schema/*",
-    out: "./db/drizzle",
-    driver: 'pg',
     dbCredentials: {
-        "connectionString": process.env.POSTGRES_URL
-    }
+        "connectionString": process.env.POSTGRES_URL ||""
+    },
+    driver: 'pg',
+    out: "./db/drizzle",
+    schema: "./db/schema/*"
 });
 export const db = drizzle(sql);
 
