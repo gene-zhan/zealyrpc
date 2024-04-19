@@ -1,4 +1,7 @@
 import {type  NextRequest, NextResponse} from 'next/server'
+import {db} from '../../../../../dizzle.config'
+import {zealyQuizTask} from "../../../../../db/drizzle/schema";
+import {varchar} from "drizzle-orm/pg-core";
 
 
 export async function GET(request: NextRequest) {
@@ -17,11 +20,26 @@ export async function POST(request: NextRequest) {
     if (apiKey !== DefaultKey) {
         return NextResponse.json({ret: 'Invalid API Key'}, {status: 400});
     }
-
-
     const res = await request.json()
-    const success = true; // Replace with custom logic
-    console.log(res, success);
+    console.log(res);
 
-    return NextResponse.json(res, {status: 200});
+    if (res == undefined) {
+        return NextResponse.json({ret: 'Invalid request json'}, {status: 400});
+    }
+
+
+    //int json response
+    await db.insert(zealyQuizTask).values({
+        userId: res?.userId,
+        questId: res?.questId,
+        requestId: res?.requestId,
+        email: res?.account?.email,
+        wallet: res?.account?.wallet,
+        discordId: res?.account?.discordId,
+        discordHandle: res.account?.discordHandle,
+        twitterId: res?.account?.twitterId,
+        twitterUname: res?.account?.twitterUname,
+    });
+
+    return NextResponse.json({ret: 'Success'}, {status: 200});
 }
