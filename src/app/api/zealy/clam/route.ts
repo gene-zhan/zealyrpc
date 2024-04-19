@@ -49,12 +49,13 @@ export async function POST(request: NextRequest) {
         eq(flexiQuizTask.emailAddress, res?.accounts?.email),
         eq(flexiQuizTask.pass, 'true')
     ));
-    console.log("zealyresult: " ,queryResult);
+    console.log("zealyresult: ", queryResult);
 
 
     if (queryResult[0].count == 1) {
         return NextResponse.json({ret: 'Passed'}, {status: 200});
     } else {
-        return NextResponse.json({ret: 'Failed, The account ( ' + res?.accounts?.email + ' ) not passed'}, {status: 400});
+        return NextResponse.json({ret: "Failed, The account  " + res?.accounts?.email + " didn't pass the quiz exam on FlexiQuiz"}, {status: 400});
     }
+
 }
