@@ -1,7 +1,8 @@
 import {type  NextRequest, NextResponse} from 'next/server'
 import {db} from '../../../../../dizzle.config'
-import {zealyQuizTask} from "../../../../../db/drizzle/schema";
+import {zealyQuizTask,flexiQuizTask} from "../../../../../db/drizzle/schema";
 import {varchar} from "drizzle-orm/pg-core";
+import { sql ,eq} from 'drizzle-orm';
 
 
 export async function GET(request: NextRequest) {
@@ -41,5 +42,10 @@ export async function POST(request: NextRequest) {
         twitterUname: res?.accounts?.twitterUname,
     });
 
-    return NextResponse.json({ret: 'Success'}, {status: 200});
+    if(res?.accounts?.email == null) {
+        return NextResponse.json({ret: 'accounts email is null'}, {status: 400});
+    }
+    const result = await db.select().from(flexiQuizTask).where(eq(flexiQuizTask.emailAddress, res?.accounts?.email));
+
+    return NextResponse.json({ret: result}, {status: 200});
 }
