@@ -27,8 +27,45 @@ async function seedUsers(client) {
 
         console.log(`Created "zealy_quiz_task" table`);
 
+
         return {
-            createTable
+            createTable,
+        };
+    } catch (error) {
+        console.error('Error seeding zealy_quiz_task:', error);
+        throw error;
+    }
+}
+
+async function seedFlexi(client) {
+    try {
+        await client.sql`drop table if exists flexi_quiz_task; `
+        const createFlexiTable = await client.sql`
+          create table flexi_quiz_task
+          (
+              id bigserial primary key,
+              gmt_created timestamp not null default current_timestamp,
+              gmt_modified timestamp not null default current_timestamp,
+              event_id          varchar(128),
+              response_id       varchar(128),
+              quest_id          varchar(128),
+              first_name        varchar(128),
+              last_name         varchar(128),
+              email_address         varchar(255),
+              user_id               varchar(128),
+              points                varchar(64),
+              available_points      varchar(64),
+              percentage_score      varchar(64),
+              grade                 varchar(8),
+              pass                  varchar(512),
+              duration              bigint
+          );
+          create index flexi_quiz_task_zealy_email_index on flexi_quiz_task (email_address);
+        `;
+
+        console.log(`Created "flexi_quiz_task" table`);
+        return {
+            createFlexiTable
         };
     } catch (error) {
         console.error('Error seeding zealy_quiz_task:', error);
@@ -40,7 +77,7 @@ async function main() {
     const client = await db.connect();
 
     await seedUsers(client);
-
+    await seedFlexi(client);
     await client.end();
 }
 
