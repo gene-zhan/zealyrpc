@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
 
     const res = await request.json()
-    console.log("submit:" + res);
+    console.log("submit: " + JSON.stringify(res));
 
     await db.insert(flexiQuizTask).values({
         eventId: res?.event_id,

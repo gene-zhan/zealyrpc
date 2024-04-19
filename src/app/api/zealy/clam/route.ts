@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ret: 'Invalid API Key'}, {status: 400});
     }
     const res = await request.json()
-    console.log(res);
+    console.log("zealy: " + JSON.stringify(res));
 
     if (res == undefined) {
         return NextResponse.json({ret: 'Invalid request json'}, {status: 400});
